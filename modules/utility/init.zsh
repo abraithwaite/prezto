@@ -89,7 +89,7 @@ else
   fi
 fi
 
-alias l='ls -1A'         # Lists in one column, hidden files.
+alias l='ls -la'         # Lists in one column, hidden files.
 alias ll='ls -lh'        # Lists human readable sizes.
 alias lr='ll -R'         # Lists human readable sizes, recursively.
 alias la='ll -A'         # Lists human readable sizes, hidden files.
