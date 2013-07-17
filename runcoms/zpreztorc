@@ -32,9 +32,11 @@ zstyle ':prezto:load' pmodule \
   'spectrum' \
   'utility' \
   'completion' \
+  'python' \
   'prompt' \
   'ruby'
 
+export VIRTUAL_ENV_DISABLE_PROMPT=1
 #
 # Editor
 #
