@@ -19,6 +19,7 @@ setopt CORRECT
 
 # Disable correction.
 alias ack='nocorrect ack'
+alias d='nocorrect cd ..'
 alias cd='nocorrect cd'
 alias cp='nocorrect cp'
 alias ebuild='nocorrect ebuild'
