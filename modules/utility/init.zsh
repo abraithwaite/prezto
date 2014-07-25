@@ -10,54 +10,39 @@
 # Load dependencies.
 pmodload 'helper' 'spectrum'
 
-# Correct commands.
-setopt CORRECT
+setopt autonamedirs
+
+unsetopt cdable_vars
+
+# don't correct commands.
+unsetopt correct
 
 #
 # Aliases
 #
 
-# Disable correction.
-alias ack='nocorrect ack'
-alias cd='nocorrect cd'
-alias cp='nocorrect cp'
-alias ebuild='nocorrect ebuild'
-alias gcc='nocorrect gcc'
-alias gist='nocorrect gist'
-alias grep='nocorrect grep'
-alias heroku='nocorrect heroku'
-alias ln='nocorrect ln'
-alias man='nocorrect man'
-alias mkdir='nocorrect mkdir'
-alias mv='nocorrect mv'
-alias mysql='nocorrect mysql'
-alias rm='nocorrect rm'
-
 # Disable globbing.
-alias bower='noglob bower'
 alias fc='noglob fc'
 alias find='noglob find'
 alias ftp='noglob ftp'
-alias history='noglob history'
+alias history='noglob history 1'
 alias locate='noglob locate'
 alias rake='noglob rake'
 alias rsync='noglob rsync'
 alias scp='noglob scp'
 alias sftp='noglob sftp'
 
-# Define general aliases.
-alias _='sudo'
-alias b='${(z)BROWSER}'
-alias cp="${aliases[cp]:-cp} -i"
-alias e='${(z)VISUAL:-${(z)EDITOR}}'
-alias ln="${aliases[ln]:-ln} -i"
+# Define aliases.
 alias mkdir="${aliases[mkdir]:-mkdir} -p"
-alias mv="${aliases[mv]:-mv} -i"
-alias p='${(z)PAGER}'
-alias po='popd'
-alias pu='pushd'
-alias rm="${aliases[rm]:-rm} -i"
-alias type='type -a'
+
+alias s="source"
+alias c="clear"
+alias vim="vim -O"
+alias vi="vim -O"
+alias py=$(which python)
+alias fdate="date +'%y-%m-%d'"
+alias gdb="gdb -q"
+alias tmux="tmux -2"
 
 # ls
 if is-callable 'dircolors'; then
@@ -121,9 +106,6 @@ else
   fi
 fi
 
-alias pbc='pbcopy'
-alias pbp='pbpaste'
-
 # File Download
 if (( $+commands[curl] )); then
   alias get='curl --continue-at - --location --progress-bar --remote-name --remote-time'
@@ -135,24 +117,17 @@ fi
 alias df='df -kh'
 alias du='du -kh'
 
-if (( $+commands[htop] )); then
-  alias top=htop
-else
-  alias topc='top -o cpu'
-  alias topm='top -o vsize'
-fi
-
 # Miscellaneous
 
 # Serves a directory via HTTP.
-alias http-serve='python -m SimpleHTTPServer'
+alias simple-http='python -m SimpleHTTPServer'
 
 #
 # Functions
 #
 
 # Makes a directory and changes to it.
-function mkdcd {
+function mkcd {
   [[ -n "$1" ]] && mkdir -p "$1" && builtin cd "$1"
 }
 
@@ -176,13 +151,7 @@ function slit {
   awk "{ print ${(j:,:):-\$${^@}} }"
 }
 
-# Finds files and executes a command on them.
-function find-exec {
-  find . -type f -iname "*${1:-}*" -exec "${2:-file}" '{}' \;
-}
-
 # Displays user owned processes status.
 function psu {
   ps -U "${1:-$USER}" -o 'pid,%cpu,%mem,command' "${(@)argv[2,-1]}"
 }
-
